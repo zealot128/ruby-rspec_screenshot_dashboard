@@ -1,5 +1,7 @@
 # RspecScreenshotDashboard WIP
 
+[![Gem Version](https://badge.fury.io/rb/rspec_screenshot_dashboard.svg)](https://badge.fury.io/rb/rspec_screenshot_dashboard)
+
 Hooks into RSpec and makes browser screenshots in all js-feature specs. It works, by hooking into Capybara's click_on, click_button, etc. methods and will make a screenshot before and after each click.
 After all tests run, it will generate a report page, default under public/screenshot_overview (which can conveniently be viewed through the dev server: http://localhost:3000/screenshot_overview/).
 
