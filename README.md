@@ -3,7 +3,12 @@
 Hooks into RSpec and makes browser screenshots in all js-feature specs. It works, by hooking into Capybara's click_on, click_button, etc. methods and will make a screenshot before and after each click.
 After all tests run, it will generate a report page, default under public/screenshot_overview (which can conveniently be viewed through the dev server: http://localhost:3000/screenshot_overview/).
 
-Current state: WIP
+
+### WIP State
+
+* [ ] No Minitest support yet (PRs welcome)
+* [ ] WebUI Improvements: Small Thumbnails, After images missing yet, more storyline with next button, ...
+* [ ] Does not load, when opening just localhost:3000/screenshot_overview, must append /
 
 ## Installation
 
@@ -41,6 +46,31 @@ RSpecScreenshotDashboard::Config.output_dir = 'public/screenshot_overview'
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/zealot128/ruby-rspec_screenshot_dashboard.
+
+### Building the web ui
+
+* Installing [vue-cli](https://github.com/vuejs/vue-cli).
+* Copy/linking a generated index.json and screenshots directory into dashboard/public/
+
+```
+cd dashboard/
+yarn
+yarn serve
+```
+
+### Releasing new web ui
+
+```
+cd dashboard/
+yarn build
+git add dist
+```
+
+### Releasing new gem version
+
+1. generate new dashboard dist/assets
+2. increment version number in ``lib/rspec_screenshot_dashboard/version.rb``
+3. ``rake release``
 
 ## License
 
