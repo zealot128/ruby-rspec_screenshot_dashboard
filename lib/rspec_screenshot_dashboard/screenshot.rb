@@ -1,6 +1,6 @@
 module RSpecScreenshotDashboard
   class Screenshot
-    ATTR = [:url, :argument, :full_path, :group_description, :example_description, :file_with_line].freeze
+    ATTR = [:url, :argument, :full_path, :group_description, :example_description, :file_with_line, :sequence_number, :backtrace].freeze
     attr_accessor(*ATTR)
     def initialize(opts = {})
       opts.each do |k, v|

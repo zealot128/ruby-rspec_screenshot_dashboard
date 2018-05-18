@@ -13,6 +13,7 @@ module RSpecScreenshotDashboard
   autoload :Screenshot, 'rspec_screenshot_dashboard/screenshot'
   autoload :Manager, 'rspec_screenshot_dashboard/manager'
   autoload :CapybaraPatch, 'rspec_screenshot_dashboard/capybara_patch'
+  autoload :CapybaraNodePatch, 'rspec_screenshot_dashboard/capybara_node_patch'
 end
 
 if defined?(RSpec)
@@ -20,4 +21,5 @@ if defined?(RSpec)
   require 'capybara'
   require 'capybara/dsl'
   Capybara::DSL.send(:prepend, RSpecScreenshotDashboard::CapybaraPatch)
+  Capybara::Node::Element.send(:prepend, RSpecScreenshotDashboard::CapybaraNodePatch)
 end

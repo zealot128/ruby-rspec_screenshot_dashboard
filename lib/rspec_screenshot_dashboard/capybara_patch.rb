@@ -2,39 +2,42 @@ module RSpecScreenshotDashboard
   module CapybaraPatch
     # @override
     def visit(url)
-      super
-      _rspec_screenshot_dashboard_make_screenshot(url)
+      _rspec_screenshot_dashboard_make_screenshot(url) do
+        super
+      end
     end
 
     # @override
     def click_button(*args)
-      super
-      _rspec_screenshot_dashboard_make_screenshot(args.first)
+      _rspec_screenshot_dashboard_make_screenshot(args.first) do
+        super
+      end
     end
 
     # @override
     def click_link(*args)
-      super
-      _rspec_screenshot_dashboard_make_screenshot(args.first)
+      _rspec_screenshot_dashboard_make_screenshot(args.first) do
+        super
+      end
     end
 
     # @override
     def click_on(*args)
-      super
-      _rspec_screenshot_dashboard_make_screenshot(args.first)
+      _rspec_screenshot_dashboard_make_screenshot(args.first) do
+        super
+      end
     end
 
     private
 
-    def _rspec_screenshot_dashboard_make_screenshot(argument)
+    def _rspec_screenshot_dashboard_make_screenshot(argument, &block)
       ex = if defined?(RSpec.current_example)
              RSpec.current_example
            else
              example
            end
-      if ex && (ex.metadata[:js] || ex.metadata[:screenshot]) && RSpecScreenshotDashboard::Config.enabled
-        filename = Manager.instance.add_image_from_rspec(argument, ex, current_path)
-        page.save_screenshot(Rails.root.join(filename).to_s, full: true)
+      Manager.instance.rspec_click_hook(page, argument, ex) do
+        yield
       end
     end
   end
