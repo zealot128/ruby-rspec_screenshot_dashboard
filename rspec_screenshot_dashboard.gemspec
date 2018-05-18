@@ -9,23 +9,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Stefan Wienert"]
   spec.email         = ["info@stefanwienert.de"]
 
-  spec.summary       = 'hooks into Capybara poltergeist to automatically make screenshots after each click'
-  spec.description   = "Useful for running in Continuos integration server, so the designer can look up, after recent design changes, if anything broke. One get's a brief overview over the application wide style renderings (on Chrome)."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = 'Hooks into Capybara/Selenium and takes screenshots before/after each click in all tests and generates an dashboard/overview to compare/check for design probs'
+  spec.description   = "Hooks into RSpec and makes browser screenshots in all js-feature specs. It works, by hooking into Capybara's click_on, click_button, etc. methods and will make a screenshot before and after each click. After all tests run, it will generate a report page, default under public/screenshot_overview (which can conveniently be viewed through the dev server: http://localhost:3000/screenshot_overview/)."
+  spec.homepage      = "https://github.com/zealot128/ruby-rspec_screenshot_dashboard"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
 
-  spec.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
+  spec.files = `git ls-files -z`.split("\x0").select { |f|
+    !f.match(%r{^(bin|test|spec|features)/}) && (!f[/^dashboard/] || f[%r{dashboard/dist}])
+  }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
