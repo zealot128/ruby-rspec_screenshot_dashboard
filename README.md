@@ -1,15 +1,20 @@
-# RspecScreenshotDashboard
+# RspecScreenshotDashboard WIP
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec_screenshot_dashboard`. To experiment with that code, run `bin/console` for an interactive prompt.
+Hooks into RSpec and makes browser screenshots in all js-feature specs. It works, by hooking into Capybara's click_on, click_button, etc. methods and will make a screenshot before and after each click.
+After all tests run, it will generate a report page, default under public/screenshot_overview (which can conveniently be viewed through the dev server: http://localhost:3000/screenshot_overview/).
 
-TODO: Delete this and the text above, and describe your gem
+Current state: WIP
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec_screenshot_dashboard'
+group :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'rspec_screenshot_dashboard'
+end
 ```
 
 And then execute:
@@ -22,17 +27,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Requires usage of Capybara with a screenshotable browser (Selenium Chromedriver, Poltergeist)
 
-## Development
+When requiring the Gem, it will automatically hook into RSpec's before block.
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Config can be set before starting tests (like spec_helper or support file)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+RSpecScreenshotDashboard::Config.enabled = true
+RSpecScreenshotDashboard::Config.output_dir = 'public/screenshot_overview'
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/zealot128/rspec_screenshot_dashboard.
+Bug reports and pull requests are welcome on GitHub at https://github.com/zealot128/ruby-rspec_screenshot_dashboard.
 
 ## License
 
